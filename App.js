@@ -62,14 +62,13 @@ export default function App() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}
-        onLayout={onLayoutRootView}
-      >      
-        <ImageBackground source={require('./src/img/bg-img.png')} style={styles.image}>
-
-        <RegistrationScreen />     
-        </ImageBackground>
-      </View>  
-    </TouchableWithoutFeedback> 
+          onLayout={onLayoutRootView}
+        >      
+          <ImageBackground source={require('./src/img/bg-img.png')} style={styles.image}>
+          <RegistrationScreen />     
+          </ImageBackground>
+        </View>  
+      </TouchableWithoutFeedback> 
   );
 }
 

@@ -26,6 +26,8 @@ const styles = EStyleSheet.create({
     },
     from: {
         marginHorizontal: 16,
+        // justifyContent: 'flex-end',
+        // marginBottom: 10,
     },
     input: {
         width: 343,
@@ -48,8 +50,6 @@ const styles = EStyleSheet.create({
         width: 120,
         height: 120,
         backgroundColor: '#E8E8E8',
-        // marginTop: -60,
-        // marginBottom: 32,
         borderRadius: 16,
     },
 
@@ -79,6 +79,19 @@ const styles = EStyleSheet.create({
         fontWeight: 400,
     },
 
+    showPassBtn: {
+        position: 'absolute',
+        right: 16,
+        top: 16,
+    },
+
+    showPassBtnText: {        
+        color: "#1B4371",
+        // textAlign: 'right',
+        fontFamily: 'Roboto-Regular',
+        fontSize: 16,        
+        fontWeight: 400,      
+    },
 });
 
 export default styles;
