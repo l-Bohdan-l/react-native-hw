@@ -13,16 +13,19 @@ import {
   Keyboard,
 } from "react-native";
 import { RegistrationScreen } from "./src/components/Screens/RegistrationScreen";
-import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import EStyleSheet from 'react-native-extended-stylesheet';
-EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use global variables!
+import { LoginScreen } from "./src/components/Screens/LoginScreen";
+
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import EStyleSheet from "react-native-extended-stylesheet";
+EStyleSheet.build({
+  // always call EStyleSheet.build() even if you don't use global variables!
   // $textColor: '#0275d8'
 });
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [isReady, setIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     async function prepare() {
@@ -32,7 +35,7 @@ export default function App() {
           "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
           "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
           "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
-        });        
+        });
       } catch (e) {
         console.warn(e);
       } finally {
@@ -57,18 +60,19 @@ export default function App() {
   if (!isReady) {
     return null;
   }
-  
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}
-          onLayout={onLayoutRootView}
-        >      
-          <ImageBackground source={require('./src/img/bg-img.png')} style={styles.image}>
-          <RegistrationScreen />     
-          </ImageBackground>
-        </View>  
-      </TouchableWithoutFeedback> 
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        <ImageBackground
+          source={require("./src/img/bg-img.png")}
+          style={styles.image}
+        >
+          {/* <RegistrationScreen />      */}
+          <LoginScreen />
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -79,12 +83,12 @@ const styles = StyleSheet.create({
     // alignItems: "center",
   },
   text: {
-    fontFamily: 'Roboto-Bold',
+    fontFamily: "Roboto-Bold",
     fontWeight: "900",
   },
   image: {
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "flex-end",
-    },
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+  },
 });
