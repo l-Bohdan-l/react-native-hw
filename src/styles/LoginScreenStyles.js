@@ -3,7 +3,7 @@ import EStyleSheet from "react-native-extended-stylesheet";
 
 const styles = EStyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
     borderTopLeftRadius: 25,
@@ -11,6 +11,12 @@ const styles = EStyleSheet.create({
     backgroundColor: "#FFF",
     height: 549,
     paddingTop: 32,
+  },
+
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
   },
   title: {
     color: "#212121",

@@ -14,6 +14,8 @@ import {
 } from "react-native";
 import { RegistrationScreen } from "./src/components/Screens/RegistrationScreen";
 import { LoginScreen } from "./src/components/Screens/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -23,6 +25,8 @@ EStyleSheet.build({
   // $textColor: '#0275d8'
 });
 SplashScreen.preventAutoHideAsync();
+
+const AuthStack = createStackNavigator();
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -62,17 +66,23 @@ export default function App() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <ImageBackground
-          source={require("./src/img/bg-img.png")}
-          style={styles.image}
-        >
-          {/* <RegistrationScreen />      */}
-          <LoginScreen />
-        </ImageBackground>
-      </View>
-    </TouchableWithoutFeedback>
+    <View onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <ImageBackground
+            source={require("./src/img/bg-img.png")}
+            style={styles.image}
+          > */}
+        <AuthStack.Navigator>
+          <AuthStack.Screen name="Register" component={RegistrationScreen} />
+          <AuthStack.Screen name="Login" component={LoginScreen} />
+        </AuthStack.Navigator>
+        {/* </ImageBackground>
+        </View>
+      </TouchableWithoutFeedback> */}
+      </NavigationContainer>
+    </View>
   );
 }
 

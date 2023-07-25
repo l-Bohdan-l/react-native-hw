@@ -53,75 +53,84 @@ export const LoginScreen = () => {
     setIsShownKeyboard(false);
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      <TouchableWithoutFeedback onPress={handleContainerTouch}>
-        <View
-          style={{
-            ...styles.container,
-            justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
-            height: isShownKeyboard ? 400 : 549,
-          }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../../../src/img/bg-img.png")}
+          style={styles.image}
         >
-          <Text style={styles.title}>Увійти</Text>
-          <View style={styles.from}>
-            <TextInput
-              value={state.email}
-              onChangeText={emailHandler}
-              onEndEditing={() => {
-                setIsShownKeyboard(false);
-              }}
-              style={styles.input}
-              keyboardType="email-address"
-              placeholder="Адреса електронної пошти"
-              onFocus={() => {
-                setIsShownKeyboard(true);
-              }}
-            />
-            <View>
-              <TextInput
-                value={state.password}
-                onChangeText={passwordHandler}
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
+            <TouchableWithoutFeedback onPress={handleContainerTouch}>
+              <View
                 style={{
-                  ...styles.input,
-                  ...styles.lastInput,
-                  //   marginBottom: isShownKeyboard ? 10 : 43,
+                  ...styles.container,
+                  justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
+                  height: isShownKeyboard ? 400 : 549,
                 }}
-                secureTextEntry={hidePass}
-                onEndEditing={() => {
-                  setIsShownKeyboard(false);
-                }}
-                placeholder="Пароль"
-                onFocus={() => {
-                  setIsShownKeyboard(true);
-                }}
-              />
-              <TouchableOpacity
-                style={styles.showPassBtn}
-                onPress={showPassword}
               >
-                <Text style={styles.showPassBtnText}>Показати</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity
-              style={styles.btn}
-              activeOpacity={0.8}
-              onPress={handleSubmit}
-            >
-              <Text style={styles.btnText}>Зареєструватися</Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                ...styles.haveAccount,
-                marginBottom: isShownKeyboard ? 10 : 0,
-              }}
-            >
-              Немає акаунту? Зареєструватися
-            </Text>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+                <Text style={styles.title}>Увійти</Text>
+                <View style={styles.from}>
+                  <TextInput
+                    value={state.email}
+                    onChangeText={emailHandler}
+                    onEndEditing={() => {
+                      setIsShownKeyboard(false);
+                    }}
+                    style={styles.input}
+                    keyboardType="email-address"
+                    placeholder="Адреса електронної пошти"
+                    onFocus={() => {
+                      setIsShownKeyboard(true);
+                    }}
+                  />
+                  <View>
+                    <TextInput
+                      value={state.password}
+                      onChangeText={passwordHandler}
+                      style={{
+                        ...styles.input,
+                        ...styles.lastInput,
+                        //   marginBottom: isShownKeyboard ? 10 : 43,
+                      }}
+                      secureTextEntry={hidePass}
+                      onEndEditing={() => {
+                        setIsShownKeyboard(false);
+                      }}
+                      placeholder="Пароль"
+                      onFocus={() => {
+                        setIsShownKeyboard(true);
+                      }}
+                    />
+                    <TouchableOpacity
+                      style={styles.showPassBtn}
+                      onPress={showPassword}
+                    >
+                      <Text style={styles.showPassBtnText}>Показати</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.btn}
+                    activeOpacity={0.8}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.btnText}>Зареєструватися</Text>
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      ...styles.haveAccount,
+                      marginBottom: isShownKeyboard ? 10 : 0,
+                    }}
+                  >
+                    Немає акаунту? Зареєструватися
+                  </Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
