@@ -14,7 +14,7 @@ import {
 import styles from "../../styles/LoginScreenStyles";
 import { useState } from "react";
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const initialState = {
     email: "",
     password: "",
@@ -53,7 +53,7 @@ export const LoginScreen = () => {
     setIsShownKeyboard(false);
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={handleContainerTouch}>
       <View style={styles.container}>
         <ImageBackground
           source={require("../../../src/img/bg-img.png")}
@@ -62,12 +62,13 @@ export const LoginScreen = () => {
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <TouchableWithoutFeedback onPress={handleContainerTouch}>
+            <View>
               <View
                 style={{
-                  ...styles.container,
-                  justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
+                  ...styles.wrapper,
+                  // justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
                   height: isShownKeyboard ? 400 : 549,
+                  // paddingTop: 32,
                 }}
               >
                 <Text style={styles.title}>Увійти</Text>
@@ -115,19 +116,40 @@ export const LoginScreen = () => {
                     activeOpacity={0.8}
                     onPress={handleSubmit}
                   >
-                    <Text style={styles.btnText}>Зареєструватися</Text>
+                    <Text style={styles.btnText}>Увійти</Text>
                   </TouchableOpacity>
-                  <Text
+                  {/* <Text
                     style={{
                       ...styles.haveAccount,
                       marginBottom: isShownKeyboard ? 10 : 0,
                     }}
                   >
                     Немає акаунту? Зареєструватися
-                  </Text>
+                  </Text> */}
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate("Register")}
+                  >
+                    <Text
+                      style={{
+                        ...styles.haveAccount,
+                        // marginRight: 5,
+                      }}
+                    >
+                      Немає акаунту?{" "}
+                      <Text
+                        style={{
+                          textDecorationLine: "underline",
+                          marginLeft: 20,
+                        }}
+                      >
+                        Зареєструватися
+                      </Text>
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            </TouchableWithoutFeedback>
+            </View>
           </KeyboardAvoidingView>
         </ImageBackground>
       </View>

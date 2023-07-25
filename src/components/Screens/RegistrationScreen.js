@@ -15,7 +15,7 @@ import styles from "../../styles/RegistrationScreenStyles";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { useState } from "react";
 
-export const RegistrationScreen = () => {
+export const RegistrationScreen = ({ navigation }) => {
   const initialState = {
     login: "",
     email: "",
@@ -68,14 +68,13 @@ export const RegistrationScreen = () => {
           source={require("../../../src/img/bg-img.png")}
           style={styles.image}
         >
-          <View>
-            <KeyboardAvoidingView
-              behavior={Platform.OS == "ios" ? "padding" : "height"}
-            >
-              {/* <TouchableWithoutFeedback onPress={handleContainerTouch}> */}
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
+            <View>
               <View
                 style={{
-                  ...styles.container,
+                  ...styles.wrapper,
                   justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
                   // height: isShownKeyboard ? 400 : 549,
                 }}
@@ -145,12 +144,23 @@ export const RegistrationScreen = () => {
                   >
                     <Text style={styles.btnText}>Зареєструватися</Text>
                   </TouchableOpacity>
-                  <Text style={styles.haveAccount}>Вже є акаунт? Увійти</Text>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    <Text
+                      style={{
+                        ...styles.haveAccount,
+                        // marginRight: 5,
+                      }}
+                    >
+                      Вже є акаунт? Увійти
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-              {/* </TouchableWithoutFeedback> */}
-            </KeyboardAvoidingView>
-          </View>
+            </View>
+          </KeyboardAvoidingView>
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>

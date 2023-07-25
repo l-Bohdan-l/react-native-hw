@@ -4,19 +4,28 @@ import EStyleSheet from "react-native-extended-stylesheet";
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
+    // justifyContent: "flex-start",
+    // borderTopLeftRadius: 25,
+    // borderTopRightRadius: 25,
+    backgroundColor: "#FFF",
+    // height: 549,
+    // paddingTop: 92,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+  },
+  wrapper: {
+    // flex: 1,
     justifyContent: "flex-start",
+    alignItems: "center",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#FFF",
     height: 549,
     paddingTop: 32,
-  },
-
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
   },
   title: {
     color: "#212121",

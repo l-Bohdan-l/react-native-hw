@@ -14,8 +14,14 @@ import {
 } from "react-native";
 import { RegistrationScreen } from "./src/components/Screens/RegistrationScreen";
 import { LoginScreen } from "./src/components/Screens/LoginScreen";
+import { PostsScreen } from "./src/components/Screens/MainScreen/PostsScreen";
+import { CreateScreen } from "./src/components/Screens/MainScreen/CreateScreen";
+import { ProfileScreen } from "./src/components/Screens/MainScreen/ProfileScreen";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import useRoute from "./src/hooks/useRoute";
 
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -26,10 +32,12 @@ EStyleSheet.build({
 });
 SplashScreen.preventAutoHideAsync();
 
-const AuthStack = createStackNavigator();
+// const AuthStack = createStackNavigator();
+// const MainTab = createBottomTabNavigator();
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
+  const routing = useRoute(false);
 
   useEffect(() => {
     async function prepare() {
@@ -66,22 +74,8 @@ export default function App() {
   }
 
   return (
-    <View onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container} onLayout={onLayoutRootView}>
-          <ImageBackground
-            source={require("./src/img/bg-img.png")}
-            style={styles.image}
-          > */}
-        <AuthStack.Navigator>
-          <AuthStack.Screen name="Register" component={RegistrationScreen} />
-          <AuthStack.Screen name="Login" component={LoginScreen} />
-        </AuthStack.Navigator>
-        {/* </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback> */}
-      </NavigationContainer>
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      <NavigationContainer>{routing}</NavigationContainer>
     </View>
   );
 }
@@ -96,9 +90,9 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Bold",
     fontWeight: "900",
   },
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
-  },
+  // image: {
+  //   flex: 1,
+  //   resizeMode: "cover",
+  //   justifyContent: "flex-end",
+  // },
 });
