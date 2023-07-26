@@ -41,9 +41,6 @@ const useRoute = (isAuth) => {
     );
   }
 
-  const handleLogout = () => {
-    // navigation.navigate("Login");
-  };
   return (
     <MainTab.Navigator
       screenOptions={{ tabBarShowLabel: false, statusBarStyle: "dark" }}
@@ -51,11 +48,7 @@ const useRoute = (isAuth) => {
       <MainTab.Screen
         options={{
           headerRight: () => (
-            <TouchableOpacity
-              onPress={handleLogout}
-              style={styles.logout}
-              activeOpacity={0.8}
-            >
+            <TouchableOpacity style={styles.logout} activeOpacity={0.8}>
               <Logout />
             </TouchableOpacity>
           ),
