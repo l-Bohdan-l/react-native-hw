@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -22,6 +22,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import useRoute from "./src/hooks/useRoute";
+import AuthContext from "./src/hooks/AuthContext";
 
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -36,8 +37,11 @@ SplashScreen.preventAutoHideAsync();
 // const MainTab = createBottomTabNavigator();
 
 export default function App() {
+  // const AuthContext = createContext();
   const [isReady, setIsReady] = useState(false);
-  const routing = useRoute(false);
+  const [isAuth, setIsAuth] = useState(false);
+  const routing = useRoute(isAuth);
+  console.log("isAuth", isAuth);
 
   useEffect(() => {
     async function prepare() {
@@ -74,9 +78,11 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <NavigationContainer>{routing}</NavigationContainer>
-    </View>
+    <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        <NavigationContainer>{routing}</NavigationContainer>
+      </View>
+    </AuthContext.Provider>
   );
 }
 

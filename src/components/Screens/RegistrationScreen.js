@@ -13,9 +13,11 @@ import {
 } from "react-native";
 import styles from "../../styles/RegistrationScreenStyles";
 import EStyleSheet from "react-native-extended-stylesheet";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../../../src/hooks/AuthContext";
 
 export const RegistrationScreen = ({ navigation }) => {
+  const { isAuth, setIsAuth } = useContext(AuthContext);
   const initialState = {
     login: "",
     email: "",
@@ -53,6 +55,7 @@ export const RegistrationScreen = ({ navigation }) => {
     console.log("submit state", state);
     console.log("show", isShownKeyboard);
     setIsShownKeyboard(false);
+    setIsAuth(true);
     Keyboard.dismiss();
     setState(initialState);
   };
