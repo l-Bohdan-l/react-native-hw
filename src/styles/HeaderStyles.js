@@ -4,7 +4,7 @@ const styles = EStyleSheet.create({
   mainTitle: {
     color: "#212121",
     textAlign: "center",
-    fontFamily: "Roboto-Regular",
+    fontFamily: "Roboto-Bold",
     fontSize: 17,
     fontStyle: "normal",
     fontWeight: 500,

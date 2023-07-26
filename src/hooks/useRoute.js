@@ -45,7 +45,9 @@ const useRoute = (isAuth) => {
     // navigation.navigate("Login");
   };
   return (
-    <MainTab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+    <MainTab.Navigator
+      screenOptions={{ tabBarShowLabel: false, statusBarStyle: "dark" }}
+    >
       <MainTab.Screen
         options={{
           headerRight: () => (
@@ -59,6 +61,7 @@ const useRoute = (isAuth) => {
           ),
           title: "Публікації",
           headerTitleStyle: styles.mainTitle,
+          statusBarHidden: true,
           tabBarIcon: ({ focused, size, color }) => {
             return (
               <View
@@ -73,7 +76,11 @@ const useRoute = (isAuth) => {
                   // boxSizing: "border-box",
                 }}
               >
-                <PostsIcon width={24} height={24} fill={color} />
+                <PostsIcon
+                  width={24}
+                  height={24}
+                  fill={focused ? "#fff" : color}
+                />
               </View>
             );
           },
@@ -103,7 +110,11 @@ const useRoute = (isAuth) => {
                   height={40}
                   fill={focused ? "#FF6C00" : "#FF6C00"}
                 /> */}
-                <AntDesign name="plus" size={24} color={color} />
+                <AntDesign
+                  name="plus"
+                  size={24}
+                  color={focused ? "#fff" : color}
+                />
               </View>
             );
           },
@@ -128,7 +139,11 @@ const useRoute = (isAuth) => {
                   // boxSizing: "border-box",
                 }}
               >
-                <UserIcon width={24} height={24} fill={color} />
+                <UserIcon
+                  width={24}
+                  height={24}
+                  fill={focused ? "#fff" : color}
+                />
               </View>
             );
           },
