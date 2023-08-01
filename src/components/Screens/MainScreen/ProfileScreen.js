@@ -1,6 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import styles from "../../../styles/ProfileScreenStyle";
+import Logout from "../../../img/svg/logout.svg";
 
 export const ProfileScreen = ({ navigation }) => {
   return (
@@ -16,7 +23,12 @@ export const ProfileScreen = ({ navigation }) => {
               // top: isShownKeyboard ? 60 : -60,
             }}
           ></View>
-          <Text>ProfileScreen</Text>
+          <View style={styles.logout}>
+            <TouchableOpacity activeOpacity={0.8}>
+              <Logout />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.name}>Natali Romanova</Text>
         </View>
       </ImageBackground>
     </View>
