@@ -39,7 +39,7 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   // const AuthContext = createContext();
   const [isReady, setIsReady] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const routing = useRoute(isAuth);
   console.log("isAuth", isAuth);
 
