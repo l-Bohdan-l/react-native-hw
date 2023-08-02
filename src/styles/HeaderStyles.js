@@ -14,6 +14,9 @@ const styles = EStyleSheet.create({
   logout: {
     marginRight: 10,
   },
+  goBack: {
+    marginLeft: 16,
+  },
 });
 
 export default styles;

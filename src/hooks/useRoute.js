@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import { View, Text, TouchableOpacity } from "react-native";
 import { useContext } from "react";
@@ -82,8 +82,15 @@ const useRoute = (isAuth) => {
         component={PostsScreen}
       />
       <MainTab.Screen
+        backBehaviour="history"
         options={{
           title: "Створити публікацію",
+          tabBarStyle: { display: "none" },
+          // headerLeft: () => (
+          //   <TouchableOpacity style={styles.goBack} activeOpacity={0.8}>
+          //     <Ionicons name="arrow-back" size={24} color="black" />
+          //   </TouchableOpacity>
+          // ),
           tabBarIcon: ({ focused, size, color }) => {
             return (
               <View
