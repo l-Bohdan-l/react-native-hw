@@ -18,6 +18,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { ProfileScreen } from "./ProfileScreen";
 import styles from "../../../styles/CreateScreenStyles";
@@ -34,7 +35,7 @@ export const CreateScreen = ({ navigation }) => {
     location: "",
   };
   const [state, setState] = useState(initialState);
-  console.log("permission", permission);
+  // console.log("permission", permission);
 
   useEffect(() => {
     navigation.setOptions({
@@ -71,9 +72,22 @@ export const CreateScreen = ({ navigation }) => {
   const takePhoto = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      console.log("uri", uri);
+      // console.log("uri", uri);
       setPhoto(uri);
     }
+  };
+
+  const postPhoto = () => {
+    setPhoto("");
+    setState(initialState);
+    if (!photo || state.title === "" || state.location === "") {
+      return Alert.alert("Помилка", "Заповніть всі поля");
+    }
+    navigation.navigate("Posts", {
+      photo,
+      title: state.title,
+      location: state.location,
+    });
   };
 
   const deletePhoto = () => {
@@ -150,12 +164,13 @@ export const CreateScreen = ({ navigation }) => {
             ></TextInput>
           </View>
           <TouchableOpacity
-            disabled={!photo}
+            disabled={!photo || state.title === "" || state.location === ""}
             style={{
               ...styles.publishButton,
               backgroundColor: photo ? "#FF6C00" : "#F6F6F6",
             }}
             activeOpacity={0.8}
+            onPress={postPhoto}
           >
             <Text
               style={{

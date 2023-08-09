@@ -1,6 +1,7 @@
+import { StyleSheet } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -82,6 +83,7 @@ const styles = EStyleSheet.create({
     fontWeight: 400,
     textDecorationLine: "underline",
     marginLeft: 4,
+    // width: 227,
   },
 });
 
