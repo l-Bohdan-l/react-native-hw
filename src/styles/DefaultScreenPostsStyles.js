@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingLeft: 16,
     paddingRight: 16,
+    paddingBottom: 160,
   },
   userPhotoWrapper: {
     // flex: 1,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  likes: {
+  comments: {
     color: "#BDBDBD",
     fontFamily: "Roboto-Regular",
     fontSize: 16,
@@ -84,6 +85,19 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginLeft: 4,
     // width: 227,
+  },
+  logout: {
+    marginRight: 10,
+  },
+  mainTitle: {
+    color: "#212121",
+    textAlign: "center",
+    fontFamily: "Roboto-Bold",
+    fontSize: 17,
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: 22 /* 129.412% */,
+    letterSpacing: -0.408,
   },
 });
 

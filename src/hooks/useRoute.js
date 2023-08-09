@@ -47,11 +47,12 @@ const useRoute = (isAuth) => {
     >
       <MainTab.Screen
         options={{
-          headerRight: () => (
-            <TouchableOpacity style={styles.logout} activeOpacity={0.8}>
-              <Logout />
-            </TouchableOpacity>
-          ),
+          // headerRight: () => (
+          //   <TouchableOpacity style={styles.logout} activeOpacity={0.8}>
+          //     <Logout />
+          //   </TouchableOpacity>
+          // ),
+          headerShown: false,
           title: "Публікації",
           headerTitleStyle: styles.mainTitle,
           statusBarHidden: true,
@@ -85,6 +86,7 @@ const useRoute = (isAuth) => {
         backBehaviour="history"
         options={{
           title: "Створити публікацію",
+          unmountOnBlur: true,
           tabBarStyle: { display: "none" },
           // headerLeft: () => (
           //   <TouchableOpacity style={styles.goBack} activeOpacity={0.8}>

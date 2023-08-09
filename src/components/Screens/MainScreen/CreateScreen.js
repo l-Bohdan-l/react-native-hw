@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Camera, CameraType } from "expo-camera";
+import * as Location from "expo-location";
+import { useIsFocused } from "@react-navigation/native";
 
 import { Feather, Ionicons } from "@expo/vector-icons";
 
@@ -30,12 +32,18 @@ export const CreateScreen = ({ navigation }) => {
   const [type, setType] = useState(CameraType.back);
   const [photo, setPhoto] = useState("");
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+  const [location, setLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
   const initialState = {
     title: "",
-    location: "",
+    // location: "",
+    locationTitle: "",
   };
   const [state, setState] = useState(initialState);
   // console.log("permission", permission);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     navigation.setOptions({
@@ -50,6 +58,35 @@ export const CreateScreen = ({ navigation }) => {
       ),
     });
   });
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (!status) {
+        // status are still loading
+        return <View />;
+      }
+      if (status !== "granted") {
+        return (
+          <View style={styles.container}>
+            <Text style={{ textAlign: "center" }}>
+              We need your permission to show the map
+            </Text>
+            <Button
+              onPress={Location.requestForegroundPermissionsAsync()}
+              title="grant permission"
+            />
+          </View>
+        );
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    })();
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading
@@ -74,19 +111,28 @@ export const CreateScreen = ({ navigation }) => {
       const { uri } = await cameraRef.takePictureAsync();
       // console.log("uri", uri);
       setPhoto(uri);
+      let location = await Location.getCurrentPositionAsync({});
+      console.log("location take photo", location);
+      setLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
     }
   };
+  console.log("location create screen", location);
 
   const postPhoto = () => {
     setPhoto("");
     setState(initialState);
-    if (!photo || state.title === "" || state.location === "") {
+    if (!photo || state.title === "" || state.locationTitle === "") {
       return Alert.alert("Помилка", "Заповніть всі поля");
     }
-    navigation.navigate("Posts", {
+    navigation.navigate("DefaultScreen", {
       photo,
       title: state.title,
-      location: state.location,
+      locationTitle: state.locationTitle,
+      latitude: location.latitude,
+      longitude: location.longitude,
     });
   };
 
@@ -97,8 +143,8 @@ export const CreateScreen = ({ navigation }) => {
   const handleTitleChange = (value) => {
     setState((prevState) => ({ ...prevState, title: value }));
   };
-  const handleLocationChange = (value) => {
-    setState((prevState) => ({ ...prevState, location: value }));
+  const handleLocationTitleChange = (value) => {
+    setState((prevState) => ({ ...prevState, locationTitle: value }));
   };
 
   const handleContainerTouch = (e) => {
@@ -108,7 +154,7 @@ export const CreateScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={handleContainerTouch}>
       <View style={styles.container}>
-        {!photo && (
+        {!photo && isFocused && (
           <>
             <Camera style={styles.camera} ref={setCameraRef}>
               <TouchableOpacity
@@ -156,15 +202,17 @@ export const CreateScreen = ({ navigation }) => {
               onFocus={() => {
                 setIsShownKeyboard(true);
               }}
-              value={state.location}
-              onChangeText={handleLocationChange}
+              value={state.locationTitle}
+              onChangeText={handleLocationTitleChange}
               style={styles.pictureInput}
               placeholder="Місцевість..."
               placeholderTextColor="#BDBDBD"
             ></TextInput>
           </View>
           <TouchableOpacity
-            disabled={!photo || state.title === "" || state.location === ""}
+            disabled={
+              !photo || state.title === "" || state.locationTitle === ""
+            }
             style={{
               ...styles.publishButton,
               backgroundColor: photo ? "#FF6C00" : "#F6F6F6",
