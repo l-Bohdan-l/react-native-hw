@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
+import { Provider } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -27,6 +28,7 @@ import AuthContext from "./src/hooks/AuthContext";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import EStyleSheet from "react-native-extended-stylesheet";
+import { store } from "./src/redux/store";
 EStyleSheet.build({
   // always call EStyleSheet.build() even if you don't use global variables!
   // $textColor: '#0275d8'
@@ -78,11 +80,13 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+    // <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+    <Provider store={store}>
       <View style={styles.container} onLayout={onLayoutRootView}>
         <NavigationContainer>{routing}</NavigationContainer>
       </View>
-    </AuthContext.Provider>
+    </Provider>
+    // </AuthContext.Provider>
   );
 }
 
