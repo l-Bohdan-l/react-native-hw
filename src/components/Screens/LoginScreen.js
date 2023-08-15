@@ -16,7 +16,7 @@ import { useContext, useState } from "react";
 import AuthContext from "../../../src/hooks/AuthContext";
 
 export const LoginScreen = ({ navigation }) => {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  // const { isAuth, setIsAuth } = useContext(AuthContext);
   const initialState = {
     email: "",
     password: "",
@@ -46,7 +46,7 @@ export const LoginScreen = ({ navigation }) => {
     console.log("submit state login", state);
     console.log("show", isShownKeyboard);
     setIsShownKeyboard(false);
-    setIsAuth(true);
+    // setIsAuth(true);
     Keyboard.dismiss();
     setState(initialState);
   };
