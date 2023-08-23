@@ -14,6 +14,8 @@ import {
 import styles from "../../styles/LoginScreenStyles";
 import { useContext, useState } from "react";
 import AuthContext from "../../../src/hooks/AuthContext";
+import { useDispatch } from "react-redux";
+import { authSignIn } from "../../redux/auth/authOperations";
 
 export const LoginScreen = ({ navigation }) => {
   // const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -24,6 +26,8 @@ export const LoginScreen = ({ navigation }) => {
   const [hidePass, setHidePass] = useState(true);
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+
+  const dispatch = useDispatch();
 
   const emailHandler = (value) => {
     // setEmail(text.trim());
@@ -43,8 +47,9 @@ export const LoginScreen = ({ navigation }) => {
     //     return Alert.alert('Помилка', 'Заповніть всі поля')
     //  }
     // console.log('submit', login, email, password)
-    console.log("submit state login", state);
-    console.log("show", isShownKeyboard);
+    // console.log("submit state login", state);
+    // console.log("show", isShownKeyboard);
+    dispatch(authSignIn(state));
     setIsShownKeyboard(false);
     // setIsAuth(true);
     Keyboard.dismiss();

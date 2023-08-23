@@ -15,6 +15,8 @@ import styles from "../../styles/RegistrationScreenStyles";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { useContext, useState } from "react";
 import AuthContext from "../../../src/hooks/AuthContext";
+import { authSignUp } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 export const RegistrationScreen = ({ navigation }) => {
   // const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -29,6 +31,8 @@ export const RegistrationScreen = ({ navigation }) => {
   const [hidePass, setHidePass] = useState(true);
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+
+  const dispatch = useDispatch();
 
   const loginHandler = (value) => {
     // setLogin(text.trim());
@@ -52,8 +56,10 @@ export const RegistrationScreen = ({ navigation }) => {
     //     return Alert.alert('Помилка', 'Заповніть всі поля')
     //  }
     // console.log('submit', login, email, password)
-    console.log("submit state", state);
-    console.log("show", isShownKeyboard);
+    // console.log("submit state", state);
+    // console.log("show", isShownKeyboard);
+    console.log("state", state);
+    dispatch(authSignUp(state));
     setIsShownKeyboard(false);
     // setIsAuth(true);
     Keyboard.dismiss();

@@ -13,6 +13,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./src/firebase/config";
 import { RegistrationScreen } from "./src/components/Screens/RegistrationScreen";
 import { LoginScreen } from "./src/components/Screens/LoginScreen";
 import { PostsScreen } from "./src/components/Screens/MainScreen/PostsScreen";
@@ -42,8 +44,13 @@ export default function App() {
   // const AuthContext = createContext();
   const [isReady, setIsReady] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const routing = useRoute(isAuth);
+  const [user, setUser] = useState(null);
+  const routing = useRoute(user);
   console.log("isAuth", isAuth);
+
+  onAuthStateChanged(auth, (user) => {
+    setUser(user);
+  });
 
   useEffect(() => {
     async function prepare() {
@@ -78,6 +85,7 @@ export default function App() {
   if (!isReady) {
     return null;
   }
+  console.log("store", store.getState());
 
   return (
     // <AuthContext.Provider value={{ isAuth, setIsAuth }}>
