@@ -2,9 +2,10 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { updateUserId } from "./authSlice";
+import { updateUserProfile } from "./authSlice";
 
 export const authSignIn =
   ({ email, password }) =>
@@ -16,7 +17,7 @@ export const authSignIn =
           // Signed in
           const user = userCredential.user;
           console.log("user", user);
-          dispatch(updateUserId(user.uid));
+          dispatch(updateUserProfile(user.uid));
         }
       );
     } catch (error) {
@@ -33,9 +34,15 @@ export const authSignUp =
         (userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("user", user);
-          dispatch(updateUserId({ userId: user.uid }));
+          // console.log("user", user);
+          // dispatch(updateUserProfile({ userId: user.uid }));
         }
+      );
+      const user = auth.currentUser;
+      await updateProfile(user, { displayName: login });
+      console.log("user", user);
+      dispatch(
+        updateUserProfile({ userId: user.uid, nickname: user.displayName })
       );
     } catch (error) {
       console.log("error", error);

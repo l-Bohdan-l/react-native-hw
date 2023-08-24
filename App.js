@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -85,7 +85,8 @@ export default function App() {
   if (!isReady) {
     return null;
   }
-  console.log("store", store.getState());
+  // const id = useSelector((state) => state);
+  // console.log("id", id);
 
   return (
     // <AuthContext.Provider value={{ isAuth, setIsAuth }}>

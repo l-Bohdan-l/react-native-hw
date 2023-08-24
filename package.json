@@ -37,6 +37,7 @@
     "react-native-svg-transformer": "^1.1.0",
     "react-redux": "^8.1.2",
     "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
     "remote-redux-devtools": "^0.5.16",
     "styled-components": "^6.0.4"
   },

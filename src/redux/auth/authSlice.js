@@ -5,12 +5,17 @@ export const authSlice = createSlice({
   initialState: {
     userId: null,
     nickname: null,
+    stateChange: null,
   },
   reducers: {
-    updateUserId: (state, action) => {
-      state.userId = action.payload;
+    updateUserProfile: (state, action) => {
+      state.userId = action.payload.userId;
+      state.nickname = action.payload.nickname;
+    },
+    authStateChange: (state, action) => {
+      state.stateChange = action.payload.stateChange;
     },
   },
 });
 
-export const { updateUserId } = authSlice.actions;
+export const { updateUserProfile } = authSlice.actions;
