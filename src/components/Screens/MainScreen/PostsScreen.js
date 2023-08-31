@@ -8,10 +8,18 @@ import CommentsScreen from "../NestedScreens/CommentsScreen";
 import MapScreen from "../NestedScreens/MapScreen";
 import Logout from "../../../img/svg/logout.svg";
 import { Ionicons } from "@expo/vector-icons";
+import { authSignOut } from "../../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
 const NestedScreen = createStackNavigator();
 
 export const PostsScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(authSignOut());
+    console.log("Sign out");
+  };
   return (
     <NestedScreen.Navigator>
       <NestedScreen.Screen
@@ -21,7 +29,11 @@ export const PostsScreen = ({ navigation, route }) => {
           title: "Публікації",
           headerTitleStyle: styles.mainTitle,
           headerRight: () => (
-            <TouchableOpacity style={styles.logout} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.logout}
+              activeOpacity={0.8}
+              onPress={signOut}
+            >
               <Logout />
             </TouchableOpacity>
           ),

@@ -58,7 +58,7 @@ export const RegistrationScreen = ({ navigation }) => {
     // console.log('submit', login, email, password)
     // console.log("submit state", state);
     // console.log("show", isShownKeyboard);
-    console.log("state", state);
+    console.log("state reg screen", state);
     dispatch(authSignUp(state));
     setIsShownKeyboard(false);
     // setIsAuth(true);

@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState } from "react";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -31,6 +31,7 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { store } from "./src/redux/store";
+import { Main } from "./src/components/Main";
 EStyleSheet.build({
   // always call EStyleSheet.build() even if you don't use global variables!
   // $textColor: '#0275d8'
@@ -44,13 +45,13 @@ export default function App() {
   // const AuthContext = createContext();
   const [isReady, setIsReady] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const [user, setUser] = useState(null);
-  const routing = useRoute(user);
-  console.log("isAuth", isAuth);
+  // const [user, setUser] = useState(null);
+  // const routing = useRoute(user);
+  // console.log("isAuth", isAuth);
 
-  onAuthStateChanged(auth, (user) => {
-    setUser(user);
-  });
+  // onAuthStateChanged(auth, (user) => {
+  //   setUser(user);
+  // });
 
   useEffect(() => {
     async function prepare() {
@@ -92,7 +93,8 @@ export default function App() {
     // <AuthContext.Provider value={{ isAuth, setIsAuth }}>
     <Provider store={store}>
       <View style={styles.container} onLayout={onLayoutRootView}>
-        <NavigationContainer>{routing}</NavigationContainer>
+        {/* <NavigationContainer>{routing}</NavigationContainer> */}
+        <Main />
       </View>
     </Provider>
     // </AuthContext.Provider>
