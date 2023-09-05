@@ -25,6 +25,8 @@ import {
 import { ProfileScreen } from "./ProfileScreen";
 import styles from "../../../styles/CreateScreenStyles";
 import TrashCan from "../../../img/svg/trash-2.svg";
+import { storage } from "../../../firebase/config";
+import { ref, uploadBytes } from "firebase/storage";
 
 export const CreateScreen = ({ navigation }) => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -136,6 +138,21 @@ export const CreateScreen = ({ navigation }) => {
     });
   };
 
+  const sendPhotoOnServer = async () => {
+    const takenPhoto = await fetch(photo);
+    const file = await takenPhoto.blob();
+    const uniqueId = Date.now().toString();
+    const photoRef = ref(storage, `images/${uniqueId}`);
+    const data = await uploadBytes(photoRef, file)
+      .then((snapshot) => {
+        console.log("Uploaded a blob or file!");
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+    console.log("data", data);
+  };
+
   const deletePhoto = () => {
     setPhoto("");
     setState(initialState);
@@ -218,7 +235,7 @@ export const CreateScreen = ({ navigation }) => {
               backgroundColor: photo ? "#FF6C00" : "#F6F6F6",
             }}
             activeOpacity={0.8}
-            onPress={postPhoto}
+            onPress={sendPhotoOnServer}
           >
             <Text
               style={{
