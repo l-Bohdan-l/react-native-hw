@@ -25,8 +25,12 @@ import {
 import { ProfileScreen } from "./ProfileScreen";
 import styles from "../../../styles/CreateScreenStyles";
 import TrashCan from "../../../img/svg/trash-2.svg";
-import { storage } from "../../../firebase/config";
-import { ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../../../firebase/config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
+
+import { getUser } from "../../../selectors/selectors";
+import { useSelector } from "react-redux";
 
 export const CreateScreen = ({ navigation }) => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -34,6 +38,7 @@ export const CreateScreen = ({ navigation }) => {
   const [type, setType] = useState(CameraType.back);
   const [photo, setPhoto] = useState("");
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState("");
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,
@@ -46,6 +51,7 @@ export const CreateScreen = ({ navigation }) => {
   const [state, setState] = useState(initialState);
   // console.log("permission", permission);
   const isFocused = useIsFocused();
+  const { nickname, userId } = useSelector(getUser);
 
   useEffect(() => {
     navigation.setOptions({
@@ -123,19 +129,32 @@ export const CreateScreen = ({ navigation }) => {
   };
   console.log("location create screen", location);
 
-  const postPhoto = () => {
+  const postPhoto = async () => {
     setPhoto("");
     setState(initialState);
     if (!photo || state.title === "" || state.locationTitle === "") {
       return Alert.alert("Помилка", "Заповніть всі поля");
     }
-    navigation.navigate("DefaultScreen", {
-      photo,
+    sendPhotoOnServer();
+    await addDoc(collection(db, "posts"), {
+      photoUrl,
       title: state.title,
       locationTitle: state.locationTitle,
       latitude: location.latitude,
       longitude: location.longitude,
+      nickname,
+      userId,
     });
+    navigation.navigate(
+      "DefaultScreen"
+      //   {
+      //   photo,
+      //   title: state.title,
+      //   locationTitle: state.locationTitle,
+      //   latitude: location.latitude,
+      //   longitude: location.longitude,
+      // }
+    );
   };
 
   const sendPhotoOnServer = async () => {
@@ -143,6 +162,7 @@ export const CreateScreen = ({ navigation }) => {
     const file = await takenPhoto.blob();
     const uniqueId = Date.now().toString();
     const photoRef = ref(storage, `images/${uniqueId}`);
+
     const data = await uploadBytes(photoRef, file)
       .then((snapshot) => {
         console.log("Uploaded a blob or file!");
@@ -150,7 +170,31 @@ export const CreateScreen = ({ navigation }) => {
       .catch((error) => {
         console.log("error", error);
       });
-    console.log("data", data);
+
+    const proceedPhoto = await getDownloadURL(photoRef)
+      .then((downloadURL) => {
+        console.log("download", downloadURL);
+        setPhotoUrl(downloadURL);
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "storage/object-not-found":
+            // File doesn't exist
+            break;
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+
+          // ...
+
+          case "storage/unknown":
+            // Unknown error occurred, inspect the server response
+            break;
+        }
+      });
   };
 
   const deletePhoto = () => {
@@ -235,7 +279,7 @@ export const CreateScreen = ({ navigation }) => {
               backgroundColor: photo ? "#FF6C00" : "#F6F6F6",
             }}
             activeOpacity={0.8}
-            onPress={sendPhotoOnServer}
+            onPress={postPhoto}
           >
             <Text
               style={{
