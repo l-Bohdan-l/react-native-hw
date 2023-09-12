@@ -1,7 +1,11 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useEffect } from "react";
-const CommentsScreen = ({ navigation }) => {
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+
+import styles from "../../../styles/CommentsScreenStyles";
+const CommentsScreen = ({ navigation, route }) => {
+  const { photoUrl, postId } = route.params;
+
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -17,8 +21,8 @@ const CommentsScreen = ({ navigation }) => {
   });
 
   return (
-    <View>
-      <Text>Comments</Text>
+    <View style={styles.container}>
+      <Image source={{ uri: photoUrl }} />
     </View>
   );
 };

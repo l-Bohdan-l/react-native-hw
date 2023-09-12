@@ -70,7 +70,12 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
                   <TouchableOpacity
                     style={styles.commentsWrapper}
                     activeOpacity={0.7}
-                    onPress={() => navigation.navigate("Comments")}
+                    onPress={() =>
+                      navigation.navigate("Comments", {
+                        photoUrl: item.photoUrl,
+                        photoId: item.id,
+                      })
+                    }
                   >
                     <Ionicons
                       name="chatbubble-outline"
