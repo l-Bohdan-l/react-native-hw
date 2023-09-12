@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 
 import styles from "../../../styles/DefaultScreenPostsStyles";
 import { DefaultScreenPosts } from "../NestedScreens/DefaultScreenPosts";
@@ -9,7 +10,6 @@ import MapScreen from "../NestedScreens/MapScreen";
 import Logout from "../../../img/svg/logout.svg";
 import { Ionicons } from "@expo/vector-icons";
 import { authSignOut } from "../../../redux/auth/authOperations";
-import { useDispatch } from "react-redux";
 
 const NestedScreen = createStackNavigator();
 

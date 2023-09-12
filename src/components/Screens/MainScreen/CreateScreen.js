@@ -135,9 +135,39 @@ export const CreateScreen = ({ navigation }) => {
     if (!photo || state.title === "" || state.locationTitle === "") {
       return Alert.alert("Помилка", "Заповніть всі поля");
     }
-    sendPhotoOnServer();
+    await uploadPostOnServer();
+    // sendPhotoOnServer();
+    // console.log("url", photoUrl);
+    // if (photoUrl) {
+    //   await addDoc(collection(db, "posts"), {
+    //     photoUrl,
+    //     title: state.title,
+    //     locationTitle: state.locationTitle,
+    //     latitude: location.latitude,
+    //     longitude: location.longitude,
+    //     nickname,
+    //     userId,
+    //   });
+    //   navigation.navigate(
+    //     "DefaultScreen"
+    //     //   {
+    //     //   photo,
+    //     //   title: state.title,
+    //     //   locationTitle: state.locationTitle,
+    //     //   latitude: location.latitude,
+    //     //   longitude: location.longitude,
+    //     // }
+    //   );
+    // }
+  };
+
+  const uploadPostOnServer = async () => {
+    const photoUrl = await sendPhotoOnServer();
+
+    // const url = await fetch(photoUrl);
+
     await addDoc(collection(db, "posts"), {
-      photoUrl,
+      photoUrl: photoUrl,
       title: state.title,
       locationTitle: state.locationTitle,
       latitude: location.latitude,
@@ -162,7 +192,7 @@ export const CreateScreen = ({ navigation }) => {
     const file = await takenPhoto.blob();
     const uniqueId = Date.now().toString();
     const photoRef = ref(storage, `images/${uniqueId}`);
-
+    let photoUrl;
     const data = await uploadBytes(photoRef, file)
       .then((snapshot) => {
         console.log("Uploaded a blob or file!");
@@ -174,7 +204,8 @@ export const CreateScreen = ({ navigation }) => {
     const proceedPhoto = await getDownloadURL(photoRef)
       .then((downloadURL) => {
         console.log("download", downloadURL);
-        setPhotoUrl(downloadURL);
+        // setPhotoUrl(downloadURL);
+        photoUrl = downloadURL;
       })
       .catch((error) => {
         switch (error.code) {
@@ -195,6 +226,7 @@ export const CreateScreen = ({ navigation }) => {
             break;
         }
       });
+    return photoUrl;
   };
 
   const deletePhoto = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import { Ionicons, Feather } from "@expo/vector-icons";
-
 import {
   StyleSheet,
   View,
@@ -13,19 +13,26 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+
 import styles from "../../../styles/DefaultScreenPostsStyles";
+import { db } from "../../../firebase/config";
 
 export const DefaultScreenPosts = ({ navigation, route }) => {
-  console.log("route", route.params);
+  // console.log("route", route.params);
   const [posts, setPosts] = useState([]);
   const windowWidth = Dimensions.get("window").width;
 
+  const getAllPosts = async () => {
+    const allPosts = await onSnapshot(collection(db, "posts"), (data) => {
+      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log("Current data: ", data.docs);
+    });
+  };
+
   useEffect(() => {
-    if (route.params) {
-      console.log("useEffect", route.params);
-      setPosts((prevState) => [...prevState, route.params]);
-    }
-  }, [route.params]);
+    getAllPosts();
+  }, []);
+
   console.log("posts", posts);
   return (
     <View style={styles.container}>
@@ -45,7 +52,7 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
             renderItem={({ item }) => (
               <SafeAreaView style={{ marginBottom: 32 }}>
                 <Image
-                  source={{ uri: item.photo }}
+                  source={{ uri: item.photoUrl }}
                   style={{
                     ...styles.postImage,
                     width: windowWidth - 32,
