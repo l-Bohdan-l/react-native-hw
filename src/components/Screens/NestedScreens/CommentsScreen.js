@@ -14,6 +14,7 @@ import styles from "../../../styles/CommentsScreenStyles";
 
 const CommentsScreen = ({ navigation, route }) => {
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+  const [comment, setComment] = useState("");
 
   const { photoUrl, postId } = route.params;
   const windowWidth = Dimensions.get("window").width;
@@ -50,6 +51,7 @@ const CommentsScreen = ({ navigation, route }) => {
           <TextInput
             style={{ ...styles.commentInput, width: windowWidth - 32 }}
             placeholder="Коментувати..."
+            onChangeText = {setComment}
           ></TextInput>
           <TouchableOpacity activeOpacity={0.8} style={styles.sendIcon}>
             <AntDesign name="arrowup" size={24} color="#ffffff" />
