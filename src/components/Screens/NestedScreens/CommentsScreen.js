@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -13,12 +14,20 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import styles from "../../../styles/CommentsScreenStyles";
 import { useSelector } from "react-redux";
 import { getUser } from "../../../selectors/selectors";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { FlatList } from "react-native";
 
 const CommentsScreen = ({ navigation, route }) => {
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [comment, setComment] = useState("");
+  const [allComments, setAllComments] = useState([]);
   const user = useSelector(getUser);
 
   const { photoUrl, photoId } = route.params;
@@ -26,16 +35,19 @@ const CommentsScreen = ({ navigation, route }) => {
 
   const addComment = async () => {
     const commentRef = collection(db, "posts", photoId, "comments");
-    console.log("aaaaa", photoId, comment);
+
     await addDoc(commentRef, {
       comment: comment,
       user: user.nickname,
-    })
-      .then((data) => {
-        console.log(data);
-        console.log("add coment");
-      })
-      .catch((err) => console.log(err));
+    }).catch((err) => console.log(err));
+  };
+
+  const getAllComments = async () => {
+    const commentRef = collection(db, "posts", photoId, "comments");
+    await onSnapshot(commentRef, (data) => {
+      setAllComments(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log("Current data: ", data.docs);
+    });
   };
 
   useEffect(() => {
@@ -52,10 +64,16 @@ const CommentsScreen = ({ navigation, route }) => {
     });
   });
 
+  useEffect(() => {
+    getAllComments();
+  }, []);
+
   const handleContainerTouch = (e) => {
     Keyboard.dismiss();
     setIsShownKeyboard(false);
   };
+
+  console.log(allComments);
 
   return (
     <TouchableWithoutFeedback onPress={handleContainerTouch}>
@@ -67,6 +85,18 @@ const CommentsScreen = ({ navigation, route }) => {
             width: windowWidth - 32,
           }}
         />
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={allComments}
+            renderItem={({ item }) => (
+              <View>
+                <Text>{item.user}</Text>
+                <Text>{item.comment}</Text>
+              </View>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </SafeAreaView>
         <View>
           <TextInput
             style={{ ...styles.commentInput, width: windowWidth - 32 }}
