@@ -1,11 +1,22 @@
-import { useEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  TextInput,
+} from "react-native";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 import styles from "../../../styles/CommentsScreenStyles";
-const CommentsScreen = ({ navigation, route }) => {
-  const { photoUrl, postId } = route.params;
 
+const CommentsScreen = ({ navigation, route }) => {
+  const [isShownKeyboard, setIsShownKeyboard] = useState(false);
+
+  const { photoUrl, postId } = route.params;
+  const windowWidth = Dimensions.get("window").width;
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -20,10 +31,32 @@ const CommentsScreen = ({ navigation, route }) => {
     });
   });
 
+  const handleContainerTouch = (e) => {
+    Keyboard.dismiss();
+    setIsShownKeyboard(false);
+  };
+
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: photoUrl }} />
-    </View>
+    <TouchableWithoutFeedback onPress={handleContainerTouch}>
+      <View style={styles.container}>
+        <Image
+          source={{ uri: photoUrl }}
+          style={{
+            ...styles.postImage,
+            width: windowWidth - 32,
+          }}
+        />
+        <View>
+          <TextInput
+            style={{ ...styles.commentInput, width: windowWidth - 32 }}
+            placeholder="Коментувати..."
+          ></TextInput>
+          <TouchableOpacity activeOpacity={0.8} style={styles.sendIcon}>
+            <AntDesign name="arrowup" size={24} color="#ffffff" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

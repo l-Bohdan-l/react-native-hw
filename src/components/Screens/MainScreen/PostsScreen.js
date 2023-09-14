@@ -10,8 +10,13 @@ import MapScreen from "../NestedScreens/MapScreen";
 import Logout from "../../../img/svg/logout.svg";
 import { Ionicons } from "@expo/vector-icons";
 import { authSignOut } from "../../../redux/auth/authOperations";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MainTabScreens } from "../../../hooks/useRoute";
 
 const NestedScreen = createStackNavigator();
+const TabScreen = createBottomTabNavigator();
+
+// const
 
 export const PostsScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -23,9 +28,12 @@ export const PostsScreen = ({ navigation, route }) => {
   return (
     <NestedScreen.Navigator>
       <NestedScreen.Screen
-        name="DefaultScreen"
-        component={DefaultScreenPosts}
+        // name="DefaultScreen"
+        // component={DefaultScreenPosts}
+        component={MainTabScreens}
+        name="Posts"
         options={{
+          headerShown: false,
           title: "Публікації",
           headerTitleStyle: styles.mainTitle,
           headerRight: () => (
@@ -45,6 +53,8 @@ export const PostsScreen = ({ navigation, route }) => {
         options={{
           title: "Коментарі",
           headerTitleStyle: styles.mainTitle,
+          // tabBarStyle: { display: "none" },
+          tabBarVisible: false,
           // headerBackButtonMenuEnabled: false,
           // headerBackTitleVisible: false,
           headerBackImageSource: () => (

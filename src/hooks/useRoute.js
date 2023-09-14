@@ -19,6 +19,8 @@ import PostsIcon from "../img/svg/grid.svg";
 import AddIcon from "../img/svg/addIcon.svg";
 import UserIcon from "../img/svg/user.svg";
 import Logout from "../img/svg/logout.svg";
+import { DefaultScreenPosts } from "../components/Screens/NestedScreens/DefaultScreenPosts";
+import { useDispatch } from "react-redux";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -40,7 +42,17 @@ const useRoute = (isAuth) => {
       </AuthStack.Navigator>
     );
   }
+  return <PostsScreen />;
+};
+export default useRoute;
 
+export const MainTabScreens = () => {
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(authSignOut());
+    console.log("Sign out");
+  };
   return (
     <MainTab.Navigator
       screenOptions={{ tabBarShowLabel: false, statusBarStyle: "dark" }}
@@ -52,9 +64,19 @@ const useRoute = (isAuth) => {
           //     <Logout />
           //   </TouchableOpacity>
           // ),
-          headerShown: false,
           title: "Публікації",
           headerTitleStyle: styles.mainTitle,
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.logout}
+              activeOpacity={0.8}
+              onPress={signOut}
+            >
+              <Logout />
+            </TouchableOpacity>
+          ),
+          // headerShown: false,
+
           statusBarHidden: true,
           tabBarIcon: ({ focused, size, color }) => {
             return (
@@ -80,7 +102,8 @@ const useRoute = (isAuth) => {
           },
         }}
         name="Posts"
-        component={PostsScreen}
+        // component={PostsScreen}
+        component={DefaultScreenPosts}
       />
       <MainTab.Screen
         backBehaviour="history"
@@ -88,6 +111,7 @@ const useRoute = (isAuth) => {
           title: "Створити публікацію",
           unmountOnBlur: true,
           tabBarStyle: { display: "none" },
+          // headerShown: false,
           // headerLeft: () => (
           //   <TouchableOpacity style={styles.goBack} activeOpacity={0.8}>
           //     <Ionicons name="arrow-back" size={24} color="black" />
@@ -156,4 +180,3 @@ const useRoute = (isAuth) => {
     </MainTab.Navigator>
   );
 };
-export default useRoute;
