@@ -38,19 +38,20 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <View>
-        <View style={styles.userPhotoWrapper}>
-          <Image style={styles.userPhoto} />
-          <View style={styles.userInfoWrapper}>
-            <Text style={styles.userName}>Natali Romanova</Text>
-            <Text style={styles.userEmail}>email@example.com</Text>
-          </View>
-        </View>
         <View>
           <FlatList
             data={posts}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
-              <SafeAreaView style={{ marginBottom: 32 }}>
+              // <SafeAreaView style={{ marginBottom: 32 }}>
+              <View style={{ marginBottom: 20 }}>
+                <View style={styles.userPhotoWrapper}>
+                  <Image style={styles.userPhoto} />
+                  <View style={styles.userInfoWrapper}>
+                    <Text style={styles.userName}>{item.nickname}</Text>
+                    {/* <Text style={styles.userEmail}>email@example.com</Text> */}
+                  </View>
+                </View>
                 <Image
                   source={{ uri: item.photoUrl }}
                   style={{
@@ -102,7 +103,8 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
                     <Text style={styles.location}>{item.locationTitle}</Text>
                   </TouchableOpacity>
                 </View>
-              </SafeAreaView>
+              </View>
+              // </SafeAreaView>
             )}
           />
         </View>

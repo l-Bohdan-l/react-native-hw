@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingBottom: 160,
+    paddingBottom: 16,
   },
   userPhotoWrapper: {
     // flex: 1,

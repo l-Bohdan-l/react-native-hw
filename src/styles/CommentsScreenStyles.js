@@ -43,6 +43,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  commentWrapper: {
+    padding: 16,
+    width: 299,
+    // borderRadius: 0 6 6 6,
+    backgroundColor: "#00000008",
+    marginBottom: 24,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 6,
+    borderBottomLeftRadius: 6,
+    borderTopLeftRadius: 6,
+  },
+
+  userPhotoWrapper: {
+    // flex: 1,
+    // flexDirection: "row",
+    // marginBottom: 32,
+    marginRight: 16,
+  },
+  userPhoto: {
+    borderRadius: 50,
+    width: 28,
+    height: 28,
+    backgroundColor: "#C4C4C4",
+    // marginTop: 32,
+    // marginLeft: 16,
+    marginRight: 8,
+  },
+
+  commentBlockWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
 });
 
 export default styles;

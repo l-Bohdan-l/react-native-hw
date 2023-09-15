@@ -40,6 +40,7 @@ const CommentsScreen = ({ navigation, route }) => {
       comment: comment,
       user: user.nickname,
     }).catch((err) => console.log(err));
+    setComment("");
   };
 
   const getAllComments = async () => {
@@ -89,9 +90,14 @@ const CommentsScreen = ({ navigation, route }) => {
           <FlatList
             data={allComments}
             renderItem={({ item }) => (
-              <View>
-                <Text>{item.user}</Text>
-                <Text>{item.comment}</Text>
+              <View style={styles.commentBlockWrapper}>
+                <View style={styles.userPhotoWrapper}>
+                  <Image style={styles.userPhoto} />
+                </View>
+                <View style={styles.commentWrapper}>
+                  <Text>{item.user}</Text>
+                  <Text>{item.comment}</Text>
+                </View>
               </View>
             )}
             keyExtractor={(item) => item.id}

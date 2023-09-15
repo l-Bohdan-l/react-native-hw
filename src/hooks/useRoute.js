@@ -21,6 +21,7 @@ import UserIcon from "../img/svg/user.svg";
 import Logout from "../img/svg/logout.svg";
 import { DefaultScreenPosts } from "../components/Screens/NestedScreens/DefaultScreenPosts";
 import { useDispatch } from "react-redux";
+import { authSignOut } from "../redux/auth/authOperations";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();

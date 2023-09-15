@@ -54,6 +54,52 @@ const styles = EStyleSheet.create({
     right: 16,
     top: 22,
   },
+  postImage: {
+    // width: "100vw",
+    height: 240,
+    marginBottom: 8,
+    borderRadius: 8,
+  },
+  postTitle: {
+    color: "#212121",
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: 500,
+    marginBottom: 8,
+  },
+  commentsWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  comments: {
+    color: "#BDBDBD",
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: 400,
+  },
+  locationWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  location: {
+    color: "#212121",
+    textAlign: "right",
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    fontStyle: "normal",
+    fontWeight: 400,
+    textDecorationLine: "underline",
+    marginLeft: 4,
+    // width: 227,
+  },
+  postWrapper: {
+    marginTop: 5,
+    marginBottom: 10,
+  },
 });
 
 export default styles;

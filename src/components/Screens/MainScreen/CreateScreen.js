@@ -176,7 +176,7 @@ export const CreateScreen = ({ navigation }) => {
       userId,
     });
     navigation.navigate(
-      "DefaultScreen"
+      "Posts"
       //   {
       //   photo,
       //   title: state.title,
