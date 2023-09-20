@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     right: 8,
     width: 34,
     height: 34,
-    backgroundColor: "#FF6C00",
+    // backgroundColor: "#FF6C00",
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     // flexDirection: "row",
     // marginBottom: 32,
-    marginRight: 16,
+    // marginRight: 16,
   },
   userPhoto: {
     borderRadius: 50,
@@ -68,13 +68,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#C4C4C4",
     // marginTop: 32,
     // marginLeft: 16,
-    marginRight: 8,
+    // marginRight: 8,
   },
 
   commentBlockWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row",
+    flex: 1,
+    // flexDirection: "row",
+  },
+  commentTime: {
+    color: "#BDBDBD",
+    // text-align: right,
+    fontSize: 10,
+    fontWeight: 400,
+    marginTop: 8,
+    textAlign: "right",
+  },
+
+  userName: {
+    fontWeight: 700,
+    marginBottom: 5,
+    fontSize: 12,
   },
 });
 
