@@ -35,10 +35,12 @@ const CommentsScreen = ({ navigation, route }) => {
 
   const addComment = async () => {
     const commentRef = collection(db, "posts", photoId, "comments");
+    const currentTime = Date.now();
 
     await addDoc(commentRef, {
       comment: comment,
       user: user.nickname,
+      time: currentTime,
     }).catch((err) => console.log(err));
     setComment("");
   };
@@ -75,6 +77,7 @@ const CommentsScreen = ({ navigation, route }) => {
   };
 
   console.log(allComments);
+  // const a = new Date('milsec').toString();
 
   return (
     <TouchableWithoutFeedback onPress={handleContainerTouch}>
@@ -97,6 +100,7 @@ const CommentsScreen = ({ navigation, route }) => {
                 <View style={styles.commentWrapper}>
                   <Text>{item.user}</Text>
                   <Text>{item.comment}</Text>
+                  <Text>{new Date(item.time).getDate()}</Text>
                 </View>
               </View>
             )}
@@ -109,6 +113,9 @@ const CommentsScreen = ({ navigation, route }) => {
             placeholder="Коментувати..."
             onChangeText={setComment}
             value={comment}
+            onFocus={() => {
+              setIsShownKeyboard(true);
+            }}
           ></TextInput>
           <TouchableOpacity
             activeOpacity={0.8}
