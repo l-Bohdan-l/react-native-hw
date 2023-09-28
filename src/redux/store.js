@@ -3,8 +3,8 @@ import {
   combineReducers,
   applyMiddleware,
 } from "@reduxjs/toolkit";
-import { authSlice } from "./auth/authSlice";
 import logger from "redux-logger";
+import { authSlice } from "./auth/authSlice";
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,

@@ -18,14 +18,12 @@ import styles from "../../../styles/DefaultScreenPostsStyles";
 import { db } from "../../../firebase/config";
 
 export const DefaultScreenPosts = ({ navigation, route }) => {
-  // console.log("route", route.params);
   const [posts, setPosts] = useState([]);
   const windowWidth = Dimensions.get("window").width;
 
   const getAllPosts = async () => {
     const allPosts = await onSnapshot(collection(db, "posts"), (data) => {
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log("Current data: ", data.docs);
+      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));   
     });
   };
 
@@ -33,7 +31,6 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
     getAllPosts();
   }, []);
 
-  console.log("posts", posts);
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
@@ -42,23 +39,19 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
           <FlatList
             data={posts}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              // <SafeAreaView style={{ marginBottom: 32 }}>
+            renderItem={({ item }) => (              
               <View style={{ marginBottom: 20 }}>
                 <View style={styles.userPhotoWrapper}>
                   <Image style={styles.userPhoto} />
                   <View style={styles.userInfoWrapper}>
-                    <Text style={styles.userName}>{item.nickname}</Text>
-                    {/* <Text style={styles.userEmail}>email@example.com</Text> */}
+                    <Text style={styles.userName}>{item.nickname}</Text>                   
                   </View>
                 </View>
                 <Image
                   source={{ uri: item.photoUrl }}
                   style={{
                     ...styles.postImage,
-                    width: windowWidth - 32,
-                    // transform: [{ rotateY: "180deg" }],
-                    // transform: "rotate(180deg)",
+                    width: windowWidth - 32,                    
                   }}
                 />
                 <Text style={styles.postTitle}>{item.title}</Text>
@@ -103,8 +96,7 @@ export const DefaultScreenPosts = ({ navigation, route }) => {
                     <Text style={styles.location}>{item.locationTitle}</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-              // </SafeAreaView>
+              </View>             
             )}
           />
         </View>

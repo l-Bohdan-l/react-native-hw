@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Camera, CameraType } from "expo-camera";
 import * as Location from "expo-location";
 import { useIsFocused } from "@react-navigation/native";
-
 import { Feather, Ionicons } from "@expo/vector-icons";
-
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 import {
   StyleSheet,
   View,
@@ -22,15 +22,13 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import { useSelector } from "react-redux";
+
 import { ProfileScreen } from "./ProfileScreen";
 import styles from "../../../styles/CreateScreenStyles";
 import TrashCan from "../../../img/svg/trash-2.svg";
 import { db, storage } from "../../../firebase/config";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
-
 import { getUser } from "../../../selectors/selectors";
-import { useSelector } from "react-redux";
 
 export const CreateScreen = ({ navigation }) => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -45,11 +43,9 @@ export const CreateScreen = ({ navigation }) => {
   });
   const initialState = {
     title: "",
-    // location: "",
     locationTitle: "",
   };
   const [state, setState] = useState(initialState);
-  // console.log("permission", permission);
   const isFocused = useIsFocused();
   const { nickname, userId } = useSelector(getUser);
 
@@ -117,17 +113,14 @@ export const CreateScreen = ({ navigation }) => {
   const takePhoto = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      // console.log("uri", uri);
       setPhoto(uri);
       let location = await Location.getCurrentPositionAsync({});
-      console.log("location take photo", location);
       setLocation({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
     }
   };
-  console.log("location create screen", location);
 
   const postPhoto = async () => {
     setPhoto("");
@@ -136,35 +129,10 @@ export const CreateScreen = ({ navigation }) => {
       return Alert.alert("Помилка", "Заповніть всі поля");
     }
     await uploadPostOnServer();
-    // sendPhotoOnServer();
-    // console.log("url", photoUrl);
-    // if (photoUrl) {
-    //   await addDoc(collection(db, "posts"), {
-    //     photoUrl,
-    //     title: state.title,
-    //     locationTitle: state.locationTitle,
-    //     latitude: location.latitude,
-    //     longitude: location.longitude,
-    //     nickname,
-    //     userId,
-    //   });
-    //   navigation.navigate(
-    //     "DefaultScreen"
-    //     //   {
-    //     //   photo,
-    //     //   title: state.title,
-    //     //   locationTitle: state.locationTitle,
-    //     //   latitude: location.latitude,
-    //     //   longitude: location.longitude,
-    //     // }
-    //   );
-    // }
   };
 
   const uploadPostOnServer = async () => {
     const photoUrl = await sendPhotoOnServer();
-
-    // const url = await fetch(photoUrl);
 
     await addDoc(collection(db, "posts"), {
       photoUrl: photoUrl,
@@ -175,16 +143,7 @@ export const CreateScreen = ({ navigation }) => {
       nickname,
       userId,
     });
-    navigation.navigate(
-      "Posts"
-      //   {
-      //   photo,
-      //   title: state.title,
-      //   locationTitle: state.locationTitle,
-      //   latitude: location.latitude,
-      //   longitude: location.longitude,
-      // }
-    );
+    navigation.navigate("Posts");
   };
 
   const sendPhotoOnServer = async () => {
@@ -203,26 +162,21 @@ export const CreateScreen = ({ navigation }) => {
 
     const proceedPhoto = await getDownloadURL(photoRef)
       .then((downloadURL) => {
-        console.log("download", downloadURL);
-        // setPhotoUrl(downloadURL);
         photoUrl = downloadURL;
       })
       .catch((error) => {
         switch (error.code) {
           case "storage/object-not-found":
-            // File doesn't exist
+            console.log("File doesn't exist");
             break;
           case "storage/unauthorized":
-            // User doesn't have permission to access the object
+            console.log("User doesn't have permission to access the object");
             break;
           case "storage/canceled":
-            // User canceled the upload
+            console.log("User canceled the upload");
             break;
-
-          // ...
-
           case "storage/unknown":
-            // Unknown error occurred, inspect the server response
+            console.log("Unknown error occurred, inspect the server response");
             break;
         }
       });

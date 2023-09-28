@@ -2,30 +2,8 @@ import React, { createContext, useCallback, useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import {
   StyleSheet,
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-  Button,
-  Text,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  Keyboard,
+  View,  
 } from "react-native";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./src/firebase/config";
-import { RegistrationScreen } from "./src/components/Screens/RegistrationScreen";
-import { LoginScreen } from "./src/components/Screens/LoginScreen";
-import { PostsScreen } from "./src/components/Screens/MainScreen/PostsScreen";
-import { CreateScreen } from "./src/components/Screens/MainScreen/CreateScreen";
-import { ProfileScreen } from "./src/components/Screens/MainScreen/ProfileScreen";
-
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import useRoute from "./src/hooks/useRoute";
-import AuthContext from "./src/hooks/AuthContext";
 
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -42,16 +20,7 @@ SplashScreen.preventAutoHideAsync();
 // const MainTab = createBottomTabNavigator();
 
 export default function App() {
-  // const AuthContext = createContext();
-  const [isReady, setIsReady] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  // const [user, setUser] = useState(null);
-  // const routing = useRoute(user);
-  // console.log("isAuth", isAuth);
-
-  // onAuthStateChanged(auth, (user) => {
-  //   setUser(user);
-  // });
+  const [isReady, setIsReady] = useState(false);  
 
   useEffect(() => {
     async function prepare() {
@@ -86,34 +55,24 @@ export default function App() {
   if (!isReady) {
     return null;
   }
-  // const id = useSelector((state) => state);
-  // console.log("id", id);
 
   return (
-    // <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+    
     <Provider store={store}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        {/* <NavigationContainer>{routing}</NavigationContainer> */}
+      <View style={styles.container} onLayout={onLayoutRootView}>        
         <Main />
       </View>
     </Provider>
-    // </AuthContext.Provider>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    // justifyContent: "flex-end",
-    // alignItems: "center",
+    flex: 1,    
   },
   text: {
     fontFamily: "Roboto-Bold",
     fontWeight: "900",
-  },
-  // image: {
-  //   flex: 1,
-  //   resizeMode: "cover",
-  //   justifyContent: "flex-end",
-  // },
+  },  
 });

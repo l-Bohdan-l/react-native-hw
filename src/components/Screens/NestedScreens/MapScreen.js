@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import styles from "../../../styles/MapScreenStyles";
 
 const MapScreen = ({ navigation, route }) => {
-  console.log("route map", route.params);
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (

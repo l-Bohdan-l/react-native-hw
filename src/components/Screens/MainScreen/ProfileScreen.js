@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   StyleSheet,
   View,
   Text,
   ImageBackground,
   TouchableOpacity,
+  SafeAreaView,
+  FlatList,
+  Image,
+  Dimensions,
 } from "react-native";
-import styles from "../../../styles/ProfileScreenStyle";
-import Logout from "../../../img/svg/logout.svg";
 import {
   collection,
   query,
@@ -15,16 +18,12 @@ import {
   getDocs,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "../../../firebase/config";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../../selectors/selectors";
-import { useEffect } from "react";
-import { SafeAreaView } from "react-native";
-import { FlatList } from "react-native";
-import { useState } from "react";
-import { Image } from "react-native";
-import { Dimensions } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
+
+import styles from "../../../styles/ProfileScreenStyle";
+import Logout from "../../../img/svg/logout.svg";
+import { db } from "../../../firebase/config";
+import { getUser } from "../../../selectors/selectors";
 import { authSignOut } from "../../../redux/auth/authOperations";
 
 export const ProfileScreen = ({ navigation }) => {
@@ -60,7 +59,6 @@ export const ProfileScreen = ({ navigation }) => {
           <View
             style={{
               ...styles.imgBox,
-              // top: isShownKeyboard ? 60 : -60,
             }}
           ></View>
           <View style={styles.logout}>
@@ -79,8 +77,6 @@ export const ProfileScreen = ({ navigation }) => {
                     style={{
                       ...styles.postImage,
                       width: windowWidth - 32,
-                      // transform: [{ rotateY: "180deg" }],
-                      // transform: "rotate(180deg)",
                     }}
                   />
                   <Text style={styles.postTitle}>{item.title}</Text>

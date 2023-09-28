@@ -1,3 +1,5 @@
+import { useContext, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   ImageBackground,
   Text,
@@ -12,13 +14,10 @@ import {
   Alert,
 } from "react-native";
 import styles from "../../styles/LoginScreenStyles";
-import { useContext, useState } from "react";
 import AuthContext from "../../../src/hooks/AuthContext";
-import { useDispatch } from "react-redux";
 import { authSignIn } from "../../redux/auth/authOperations";
 
 export const LoginScreen = ({ navigation }) => {
-  // const { isAuth, setIsAuth } = useContext(AuthContext);
   const initialState = {
     email: "",
     password: "",
@@ -30,11 +29,9 @@ export const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const emailHandler = (value) => {
-    // setEmail(text.trim());
     setState((prevState) => ({ ...prevState, email: value.trim() }));
   };
   const passwordHandler = (value) => {
-    // setPassword(text.trim());
     setState((prevState) => ({ ...prevState, password: value.trim() }));
   };
 
@@ -43,15 +40,8 @@ export const LoginScreen = ({ navigation }) => {
   };
 
   const handleSubmit = (e) => {
-    // if (!login || !email || !password) {
-    //     return Alert.alert('Помилка', 'Заповніть всі поля')
-    //  }
-    // console.log('submit', login, email, password)
-    // console.log("submit state login", state);
-    // console.log("show", isShownKeyboard);
     dispatch(authSignIn(state));
     setIsShownKeyboard(false);
-    // setIsAuth(true);
     Keyboard.dismiss();
     setState(initialState);
   };
@@ -74,9 +64,7 @@ export const LoginScreen = ({ navigation }) => {
               <View
                 style={{
                   ...styles.wrapper,
-                  // justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
                   height: isShownKeyboard ? 400 : 549,
-                  // paddingTop: 32,
                 }}
               >
                 <Text style={styles.title}>Увійти</Text>
@@ -101,7 +89,6 @@ export const LoginScreen = ({ navigation }) => {
                       style={{
                         ...styles.input,
                         ...styles.lastInput,
-                        //   marginBottom: isShownKeyboard ? 10 : 43,
                       }}
                       secureTextEntry={hidePass}
                       onEndEditing={() => {
@@ -126,14 +113,6 @@ export const LoginScreen = ({ navigation }) => {
                   >
                     <Text style={styles.btnText}>Увійти</Text>
                   </TouchableOpacity>
-                  {/* <Text
-                    style={{
-                      ...styles.haveAccount,
-                      marginBottom: isShownKeyboard ? 10 : 0,
-                    }}
-                  >
-                    Немає акаунту? Зареєструватися
-                  </Text> */}
                   <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={() => navigation.navigate("Register")}
@@ -141,7 +120,6 @@ export const LoginScreen = ({ navigation }) => {
                     <Text
                       style={{
                         ...styles.haveAccount,
-                        // marginRight: 5,
                       }}
                     >
                       Немає акаунту?{" "}

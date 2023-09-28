@@ -16,7 +16,6 @@ import {
 export const authSignIn =
   ({ email, password }) =>
   async (dispatch, getState) => {
-    console.log("sign in", email, password);
     try {
       await signInWithEmailAndPassword(auth, email, password).then(
         (userCredential) => {
@@ -40,7 +39,6 @@ export const authSignIn =
 export const authSignUp =
   ({ login, email, password }) =>
   async (dispatch, getState) => {
-    console.log("signup", login, email, password);
     try {
       await createUserWithEmailAndPassword(auth, email, password).then(
         (userCredential) => {
@@ -52,7 +50,6 @@ export const authSignUp =
       );
       const user = auth.currentUser;
       await updateProfile(user, { displayName: login });
-      console.log("user", user);
       dispatch(
         updateUserProfile({ userId: user.uid, nickname: user.displayName })
       );
@@ -75,7 +72,6 @@ export const authStateChangeUser = () => async (dispatch, getState) => {
   try {
     await onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("change user", user);
         dispatch(
           updateUserProfile({ userId: user.uid, nickname: user.displayName })
         );

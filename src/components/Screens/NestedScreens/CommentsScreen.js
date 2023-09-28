@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -15,10 +16,6 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
-
-import styles from "../../../styles/CommentsScreenStyles";
-import { useSelector } from "react-redux";
-import { getUser } from "../../../selectors/selectors";
 import {
   addDoc,
   collection,
@@ -27,6 +24,9 @@ import {
   orderBy,
   updateDoc,
 } from "firebase/firestore";
+
+import styles from "../../../styles/CommentsScreenStyles";
+import { getUser } from "../../../selectors/selectors";
 import { db } from "../../../firebase/config";
 
 const CommentsScreen = ({ navigation, route }) => {
@@ -68,7 +68,6 @@ const CommentsScreen = ({ navigation, route }) => {
     await onSnapshot(commentRef, (data) => {
       const res = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setAllComments(res);
-      console.log("Current data: ", data.docs);
     });
   };
 
@@ -99,8 +98,7 @@ const CommentsScreen = ({ navigation, route }) => {
           }
           if (a.time > b.time) {
             return -1;
-          }
-          // a должно быть равным b
+          }          
           return 0;
         })
       );
@@ -112,18 +110,12 @@ const CommentsScreen = ({ navigation, route }) => {
     Keyboard.dismiss();
     setIsShownKeyboard(false);
   };
-
-  console.log("allComments", allComments);
-  console.log("user", user);
-  // const a = new Date('milsec').toString();
-  console.log("reverse", reverseComments);
-  //1695223691516 1695223471255 1695223682433
+  
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "#fff",
-        // justifyContent: isShownKeyboard ? "flex-start" : "space-between",
+        backgroundColor: "#fff",        
         alignItems: "center",
         paddingTop: 32,
         paddingLeft: 16,
@@ -147,16 +139,10 @@ const CommentsScreen = ({ navigation, route }) => {
           />
           <View
             style={{
-              flex: 1,
-              // flexGrow: 0,
+              flex: 1,              
             }}
           >
-            <FlatList
-              style={
-                {
-                  // flexGrow: 0, height: 10
-                }
-              }
+            <FlatList              
               data={reverseComments}
               inverted={true}
               keyExtractor={(item) => item.id}
@@ -212,8 +198,7 @@ const CommentsScreen = ({ navigation, route }) => {
               )}
             />
           </View>
-          <KeyboardAvoidingView
-            // style={{ flex: 1 }}
+          <KeyboardAvoidingView           
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
             <View>
@@ -221,9 +206,7 @@ const CommentsScreen = ({ navigation, route }) => {
                 style={{
                   ...styles.commentInput,
                   width: windowWidth - 32,
-                  marginBottom: isShownKeyboard ? 100 : 0,
-                  // position: "absolute",
-                  // bottom: 0,
+                  marginBottom: isShownKeyboard ? 100 : 0,                  
                 }}
                 placeholder="Коментувати..."
                 onChangeText={setComment}
@@ -253,84 +236,3 @@ const CommentsScreen = ({ navigation, route }) => {
 
 export default CommentsScreen;
 
-//  return (
-//    <TouchableWithoutFeedback onPress={handleContainerTouch}>
-//      <View style={styles.container}>
-//        <Image
-//          source={{ uri: photoUrl }}
-//          style={{
-//            ...styles.postImage,
-//            width: windowWidth - 32,
-//          }}
-//        />
-//        <SafeAreaView style={styles.container}>
-//          <FlatList
-//            data={allComments}
-//            renderItem={({ item }) => (
-//              <View
-//                style={{
-//                  ...styles.commentBlockWrapper,
-//                  flexDirection:
-//                    item.user === user.nickname ? "row-reverse" : "row",
-//                }}
-//              >
-//                <View
-//                  style={{
-//                    ...styles.userPhotoWrapper,
-//                    marginRight: item.user === user.nickname ? 0 : 8,
-//                    marginLeft: item.user === user.nickname ? 8 : 0,
-//                  }}
-//                >
-//                  <Image
-//                    style={{
-//                      ...styles.userPhoto,
-//                    }}
-//                  />
-//                </View>
-//                <View
-//                  style={{
-//                    ...styles.commentWrapper,
-//                    width: windowWidth - 68,
-//                  }}
-//                >
-//                  <Text style={styles.userName}>{item.user}</Text>
-//                  <Text>{item.comment}</Text>
-//                  <Text style={styles.commentTime}>
-//                    {new Date(item.time).getDate()}{" "}
-//                    {new Intl.DateTimeFormat("en-US", {
-//                      month: "long",
-//                    }).format(item.time)}
-//                    {", "}
-//                    {new Date(item.time).getFullYear()}
-//                    {" | "}
-//                    {new Date(item.time).getHours()}
-//                    {":"}
-//                    {new Date(item.time).getMinutes()}
-//                  </Text>
-//                </View>
-//              </View>
-//            )}
-//            keyExtractor={(item) => item.id}
-//          />
-//        </SafeAreaView>
-//        <View>
-//          <TextInput
-//            style={{ ...styles.commentInput, width: windowWidth - 32 }}
-//            placeholder="Коментувати..."
-//            onChangeText={setComment}
-//            value={comment}
-//            onFocus={() => {
-//              setIsShownKeyboard(true);
-//            }}
-//          ></TextInput>
-//          <TouchableOpacity
-//            activeOpacity={0.8}
-//            style={styles.sendIcon}
-//            onPress={addComment}
-//          >
-//            <AntDesign name="arrowup" size={24} color="#ffffff" />
-//          </TouchableOpacity>
-//        </View>
-//      </View>
-//    </TouchableWithoutFeedback>
-//  );

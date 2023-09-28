@@ -4,13 +4,7 @@ import EStyleSheet from "react-native-extended-stylesheet";
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: "flex-start",
-    // borderTopLeftRadius: 25,
-    // borderTopRightRadius: 25,
     backgroundColor: "#FFF",
-    // height: 549,
-    // paddingTop: 92,
   },
   image: {
     flex: 1,

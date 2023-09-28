@@ -1,3 +1,6 @@
+import { useContext, useState } from "react";
+import { useDispatch } from "react-redux";
+import EStyleSheet from "react-native-extended-stylesheet";
 import {
   ImageBackground,
   Text,
@@ -12,22 +15,15 @@ import {
   Alert,
 } from "react-native";
 import styles from "../../styles/RegistrationScreenStyles";
-import EStyleSheet from "react-native-extended-stylesheet";
-import { useContext, useState } from "react";
 import AuthContext from "../../../src/hooks/AuthContext";
 import { authSignUp } from "../../redux/auth/authOperations";
-import { useDispatch } from "react-redux";
 
 export const RegistrationScreen = ({ navigation }) => {
-  // const { isAuth, setIsAuth } = useContext(AuthContext);
   const initialState = {
     login: "",
     email: "",
     password: "",
   };
-  // const [login, setLogin] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
   const [hidePass, setHidePass] = useState(true);
   const [isShownKeyboard, setIsShownKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
@@ -35,15 +31,12 @@ export const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const loginHandler = (value) => {
-    // setLogin(text.trim());
     setState((prevState) => ({ ...prevState, login: value.trim() }));
   };
   const emailHandler = (value) => {
-    // setEmail(text.trim());
     setState((prevState) => ({ ...prevState, email: value.trim() }));
   };
   const passwordHandler = (value) => {
-    // setPassword(text.trim());
     setState((prevState) => ({ ...prevState, password: value.trim() }));
   };
 
@@ -52,16 +45,8 @@ export const RegistrationScreen = ({ navigation }) => {
   };
 
   const handleSubmit = (e) => {
-    // if (!login || !email || !password) {
-    //     return Alert.alert('Помилка', 'Заповніть всі поля')
-    //  }
-    // console.log('submit', login, email, password)
-    // console.log("submit state", state);
-    // console.log("show", isShownKeyboard);
-    console.log("state reg screen", state);
     dispatch(authSignUp(state));
     setIsShownKeyboard(false);
-    // setIsAuth(true);
     Keyboard.dismiss();
     setState(initialState);
   };
@@ -70,6 +55,7 @@ export const RegistrationScreen = ({ navigation }) => {
     Keyboard.dismiss();
     setIsShownKeyboard(false);
   };
+
   return (
     <TouchableWithoutFeedback onPress={handleContainerTouch}>
       <View style={styles.container}>
@@ -85,7 +71,6 @@ export const RegistrationScreen = ({ navigation }) => {
                 style={{
                   ...styles.wrapper,
                   justifyContent: isShownKeyboard ? "flex-end" : "flex-start",
-                  // height: isShownKeyboard ? 400 : 549,
                 }}
               >
                 <View
@@ -160,7 +145,6 @@ export const RegistrationScreen = ({ navigation }) => {
                     <Text
                       style={{
                         ...styles.haveAccount,
-                        // marginRight: 5,
                       }}
                     >
                       Вже є акаунт? Увійти
